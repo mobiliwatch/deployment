@@ -1,0 +1,45 @@
+---
+- name: Build main dir
+  file:
+    path: "{{ dir }}"
+    state: directory
+    
+- name: Create user
+  user:
+    name: "{{ user }}"
+    shell: /bin/bash
+    home: "{{ dir }}"
+
+- name: Add ssh agent line to sudoers
+  lineinfile: 
+    dest: /etc/sudoers
+    state: present
+    regexp: SSH_AUTH_SOCK
+    line: Defaults env_keep += "SSH_AUTH_SOCK"
+
+- name: Setup base deps
+  apt:
+    name: "{{ item }}"
+    update_cache: yes
+  with_items:
+    - git
+    - python3
+    - python3-pip
+    - python3-dev
+    - nginx
+    - redis-server
+    - supervisor
+  tags:
+    - packages
+
+- name: Dumb symlink for node
+  file:
+    src: /usr/bin/nodejs
+    dest: /usr/bin/node
+    state: link
+
+- name: Fix Ownership
+  file:
+    path: "{{ dir }}"
+    owner: "{{ user }}"
+    recurse: yes

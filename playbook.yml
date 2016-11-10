@@ -1,0 +1,11 @@
+---
+- name: Deploy Mobili.Watch
+
+  hosts:
+    - mobili.watch
+
+  roles:
+    - role: L-P.acmetool
+      tags: ssl
+    - role: app
+      tags: app

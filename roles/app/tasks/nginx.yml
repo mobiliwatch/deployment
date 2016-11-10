@@ -1,0 +1,49 @@
+- name: Stop acmetool
+  command: "service acmetool stop"
+  args:
+    creates: "/etc/nginx/nginx.conf"
+
+- name: Build nginx dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+  with_items:
+    - "{{ dir }}/logs"
+
+- name: Build strong DH params for ssl
+  shell: openssl dhparam -out /etc/ssl/dhparams.pem 2048
+  args:
+    creates: /etc/ssl/dhparams.pem
+
+- name: Build ssl conf
+  template:
+    src: ssl.conf
+    dest: /etc/nginx/ssl.conf
+  notify: restart nginx
+
+- name: Build gzip conf
+  template:
+    src: gzip.conf
+    dest: /etc/nginx/gzip.conf
+  notify: restart nginx
+
+- name: Remove default nginx
+  file:
+    path: /etc/nginx/sites-enabled/default
+    state: absent
+  notify: restart nginx
+
+
+- name: Build nginx conf
+  template:
+    src: nginx.conf
+    dest: /etc/nginx/sites-available/mobili
+  notify: restart nginx
+
+- name: Enable nginx conf
+  file:
+    src: /etc/nginx/sites-available/mobili
+    dest: /etc/nginx/sites-enabled/mobili
+    state: link
+  notify: restart nginx
+

@@ -1,0 +1,14 @@
+- include: user.yml
+  tags: user
+
+- include: database.yml
+  tags: database
+
+- include: django.yml
+  tags: django
+
+- include: nginx.yml
+  tags: nginx
+
+- include: supervisor.yml
+  tags: supervisor

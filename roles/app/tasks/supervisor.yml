@@ -1,0 +1,41 @@
+---
+- name: Stop workers
+  supervisorctl:
+    name: "mobili_worker_{{ item }}"
+    state: stopped
+  with_items: workers
+  tags:
+    - fast
+  ignore_errors: yes
+
+- name: Stop daphne
+  supervisorctl:
+    name: "mobili_daphne"
+    state: stopped
+  tags:
+    - fast
+  ignore_errors: yes
+
+- name: Write supervisor conf
+  template:
+    src: supervisor.conf
+    dest: /etc/supervisor/conf.d/mobili.conf
+  notify: restart supervisor
+
+- name: Ensure supervisor is read
+  command: /usr/bin/supervisorctl update
+
+- name: Start daphne
+  supervisorctl:
+    name: "mobili_daphne"
+    state: started
+  tags:
+    - fast
+
+- name: Start workers
+  supervisorctl:
+    name: "mobili_worker_{{ item }}"
+    state: started
+  with_items: workers
+  tags:
+    - fast

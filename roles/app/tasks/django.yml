@@ -1,0 +1,67 @@
+- name: Build dirs
+  file:
+    path: "{{ item }}"
+    state: directory
+    owner: "{{ user }}"
+  with_items:
+    - "{{ dir }}"
+    - "{{ dir }}/cache"
+    - "{{ dir }}/data"
+    - "{{ dir }}/data/static"
+
+- name: Clone backend code
+  git:
+    repo: "{{ repo_backend }}"
+    dest: "{{ dir }}/backend"
+    accept_hostkey: yes
+  tags: 
+    - git
+    - fast
+
+- name: Install Python requirements
+  pip:
+    requirements: "{{ dir }}/backend/requirements.txt"
+    executable: /usr/bin/pip3
+  tags:
+    - fast
+
+- name: Fix Ownership
+  file:
+    path: "{{ dir }}"
+    owner: "{{ user }}"
+    recurse: yes
+  tags:
+    - fast
+
+- name: Add prod requirements
+  pip:
+    name: "{{ item }}"
+    executable: /usr/bin/pip3
+  with_items:
+    - psycopg2
+    - daphne
+  tags:
+    - packages
+
+- name: Write local settings
+  template:
+    src: settings.py
+    dest: "{{ dir }}/backend/src/mobili/local_settings.py"
+  tags:
+    - fast
+
+- name: Migrate database
+  django_manage:
+    command: "migrate --noinput"
+    app_path: "{{ dir }}/backend/src"
+    pythonpath: /usr/bin/python3
+  tags:
+    - fast
+
+- name: Collect static
+  django_manage:
+    command: "collectstatic --clear --noinput"
+    app_path: "{{ dir }}/backend/src"
+    pythonpath: /usr/bin/python3
+  tags:
+    - fast

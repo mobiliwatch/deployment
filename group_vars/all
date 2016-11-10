@@ -1,0 +1,11 @@
+dir: "/var/mobili"
+user: "mobili"
+
+pg_version: 9.6
+postgis_version: 2.3
+
+db_name: mobili
+db_password: no
+repo_backend: "ssh://git@lab.nextcairn.com/mobiliplay/backend.git"
+
+workers: [1, 2]
