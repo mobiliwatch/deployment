@@ -7,6 +7,9 @@
 - include: django.yml
   tags: django
 
+- include: frontend.yml
+  tags: frontend
+
 - include: nginx.yml
   tags: nginx
 
