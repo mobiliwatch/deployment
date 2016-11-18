@@ -45,6 +45,11 @@ CSRF_COOKIE_DOMAIN = '.{{ hostname }}'
 CSRF_COOKIE_NAME = 'mobili.csrf'
 CSRF_COOKIE_SECURE = True
 
+# Do not use bower
+STATICFILES_DIRS = [
+    '{{ dir }}/backend/front',
+]
+
 # Custom Config
 {% for k,v in django.items() %}
 {% if v is none %}
