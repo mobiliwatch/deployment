@@ -1,0 +1,8 @@
+- name: Clone frontend code
+  git:
+    repo: "{{ repo_frontend }}"
+    dest: "{{ dir }}/frontend"
+    accept_hostkey: yes
+  tags: 
+    - git
+    - fast

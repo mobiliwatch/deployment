@@ -7,5 +7,6 @@ postgis_version: 2.3
 db_name: mobili
 db_password: no
 repo_backend: "ssh://git@lab.nextcairn.com/mobiliplay/backend.git"
+repo_frontend: "ssh://git@lab.nextcairn.com/mobiliplay/frontend.git"
 
 workers: [1, 2]

@@ -50,6 +50,9 @@ STATICFILES_DIRS = [
     '{{ dir }}/backend/front',
 ]
 
+# Setup frontend
+FRONTEND_SCREEN_URL = 'https://my.{{ hostname }}/?screen={}'
+
 # Custom Config
 {% for k,v in django.items() %}
 {% if v is none %}
