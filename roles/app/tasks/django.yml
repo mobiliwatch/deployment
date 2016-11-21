@@ -65,3 +65,13 @@
     pythonpath: /usr/bin/python3
   tags:
     - fast
+
+- name: Setup crontab to update screen
+  cron:
+    name: "Update locations/transports every minute"
+    minute: "*"
+    hour: "*"
+    job: "{{ dir }}/backend/src/manage.py update_screens --location"
+  become_user: "{{ user }}"
+  tags:
+    - cron
