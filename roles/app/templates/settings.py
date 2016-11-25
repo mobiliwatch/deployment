@@ -51,7 +51,7 @@ STATICFILES_DIRS = [
 ]
 
 # Setup frontend
-FRONTEND_SCREEN_URL = 'https://my.{{ hostname }}/?screen={}'
+FRONTEND_SCREEN_URL = 'https://my.{{ hostname }}/#/screen/{}'
 
 # Custom Config
 {% for k,v in django.items() %}
