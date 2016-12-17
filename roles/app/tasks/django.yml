@@ -25,6 +25,13 @@
   tags:
     - fast
 
+- name: Install Python prod requirements
+  pip:
+    requirements: "{{ dir }}/backend/requirements-prod.txt"
+    executable: /usr/bin/pip3
+  tags:
+    - fast
+
 - name: Fix Ownership
   file:
     path: "{{ dir }}"

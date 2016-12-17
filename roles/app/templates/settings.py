@@ -33,6 +33,33 @@ CACHES = {
     }
 }
 
+# Cached templates
+TEMPLATES = [
+    {
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [
+            '{{ dir }}/backend/src/templates',
+        ],
+        'OPTIONS': {
+            'loaders' : [
+                ('django.template.loaders.cached.Loader', [
+                    'django.template.loaders.filesystem.Loader',
+                    'django.template.loaders.app_directories.Loader',
+                ]),
+            ],
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
+                'django.template.context_processors.i18n',
+                'mobili.middlewares.version'
+            ],
+        },
+    },
+]
+
+
 # Shared cookies with plans
 ALLOWED_HOSTS = [
   '{{ hostname }}',
@@ -52,6 +79,41 @@ STATICFILES_DIRS = [
 
 # Setup frontend
 FRONTEND_SCREEN_URL = 'https://my.{{ hostname }}/#/screen/{}'
+FRONTEND_SCREEN_SHARED_URL = 'https://my.{{ hostname }}/#/share/{}/{}'
+
+# Sentry error reporting
+import raven
+import os
+RAVEN_CONFIG = {
+    'dsn': '{{ raven_dsn }}',
+    'release': raven.fetch_git_sha('{{ dir }}/backend'),
+}
+
+# Installed apps + RAVEN
+INSTALLED_APPS = [
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'django.contrib.gis',
+    'widget_tweaks',
+    'webpack_loader',
+    'rest_framework',
+    'rest_framework_gis',
+    'channels',
+    'corsheaders',
+
+    # Our apps
+    'mobili',
+    'transport',
+    'users',
+    'screen',
+
+    # Raven
+    'raven.contrib.django.raven_compat',
+]
 
 # Custom Config
 {% for k,v in django.items() %}
