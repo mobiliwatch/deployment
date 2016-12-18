@@ -73,6 +73,16 @@
   tags:
     - fast
 
+- name: Build help in cache
+  django_manage:
+    command: "build_help"
+    app_path: "{{ dir }}/backend/src"
+    pythonpath: /usr/bin/python3
+
+  become_user: "{{ user }}"
+  tags:
+    - fast
+
 - name: Setup crontab to update screen
   cron:
     name: "Update locations/transports every minute"
