@@ -15,3 +15,6 @@
 
 - include: supervisor.yml
   tags: supervisor
+
+- include: stats.yml
+  tags: stats

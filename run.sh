@@ -6,4 +6,4 @@ TAGS=${1:-"fast"}
 PASS="pass NextCairn/mobili_ansible"
 
 # Run with secrets
-$PASS | ansible-playbook playbook.yml -i prod --vault-password-file=/bin/cat $@ -t $TAGS
+$PASS | ansible-playbook playbook.yml -i prod --vault-password-file=/bin/cat -t $TAGS 

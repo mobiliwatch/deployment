@@ -1,0 +1,12 @@
+---
+- name: Add goaccess repo key
+  apt_key:
+    url: https://deb.goaccess.io/gnugpg.key
+
+- name: Add goaccess repo
+  apt_repository:
+    repo: deb http://deb.goaccess.io/ xenial main
+
+- name: Install goaccess
+  apt:
+    name: goaccess
