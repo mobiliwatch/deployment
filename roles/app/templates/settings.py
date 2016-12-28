@@ -30,6 +30,7 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '{{ dir }}/cache',
+        'TIMEOUT' : None, # No cache
     }
 }
 
@@ -75,6 +76,7 @@ CSRF_COOKIE_SECURE = True
 # Do not use bower
 STATICFILES_DIRS = [
     '{{ dir }}/backend/front',
+    '{{ dir }}/backend/help',
 ]
 
 # Setup frontend
