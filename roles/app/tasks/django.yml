@@ -73,9 +73,9 @@
   tags:
     - fast
 
-- name: Build help in cache
+- name: Cleanup cache
   django_manage:
-    command: "build_help"
+    command: "cleanup"
     app_path: "{{ dir }}/backend/src"
     pythonpath: /usr/bin/python3
 
