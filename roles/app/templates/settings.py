@@ -91,32 +91,6 @@ RAVEN_CONFIG = {
     'release': raven.fetch_git_sha('{{ dir }}/backend'),
 }
 
-# Installed apps + RAVEN
-INSTALLED_APPS = [
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'django.contrib.gis',
-    'widget_tweaks',
-    'webpack_loader',
-    'rest_framework',
-    'rest_framework_gis',
-    'channels',
-    'corsheaders',
-
-    # Our apps
-    'mobili',
-    'transport',
-    'users',
-    'screen',
-
-    # Raven
-    'raven.contrib.django.raven_compat',
-]
-
 # Custom Config
 {% for k,v in django.items() %}
 {% if v is none %}
