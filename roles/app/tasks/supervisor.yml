@@ -3,7 +3,7 @@
   supervisorctl:
     name: "mobili_worker_{{ item }}"
     state: stopped
-  with_items: workers
+  with_items: "{{ workers }}"
   tags:
     - fast
   ignore_errors: yes
@@ -36,6 +36,6 @@
   supervisorctl:
     name: "mobili_worker_{{ item }}"
     state: started
-  with_items: workers
+  with_items: "{{ workers }}"
   tags:
     - fast
